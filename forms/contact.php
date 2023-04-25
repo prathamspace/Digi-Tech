@@ -1,41 +1,28 @@
 <?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
+if (isset($_REQUEST['formsubmit'])) {
+$maillayout = " <b> Enquiry From Aspire Digi Tech </b> <br />
+ Name :  " . $_REQUEST['name'] . "  <br />
+ E-Mail :  " . $_REQUEST['email'] . "  <br />
+ Subject :  " . $_REQUEST['subject'] . "  <br />
+ Message :  " . $_REQUEST['message'] . "  <br />   ";
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+    $to = "sales@aspiredigitech.com";
+    $subject = " Enquiry -Aspire Digi Tech ";
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= 'From: Aspire Digi Tech <sales@aspiredigitech.com>' . "\r\n";
+    $mail = mail($to, $subject, $maillayout, $headers);
+    if ($mail) {
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
-
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
-
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
-
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
-
-  echo $contact->send();
-?>
+    $maillayout1 = " Dear " . $_REQUEST['name'] . ", Thanks for sending your query. One of our representatives will soon be in touch with you for further details and proceedings.<br />
+    Thanks and Regards <br />
+    Aspire Digi Tech";
+        $to1 = "" . $_REQUEST['email'] . "";
+        $subject1 = "Thank You " . $_REQUEST['name'] . "";
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= 'From: Aspire Digi Tech  <info@aspiredigitech.com>' . "\r\n";
+        $mail1 = mail($to1, $subject1, $maillayout1, $headers);
+        header('location:index.html');
+    }
+}
